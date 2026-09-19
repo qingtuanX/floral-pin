@@ -29,6 +29,12 @@ echo   [4] 全部恢复置顶
 echo   [5] 查看当前状态（含实际热键、日志路径）
 echo   [6] 开启开机自启
 echo   [7] 关闭开机自启
+echo.
+echo   [8] 番茄钟：打开 / 显示
+echo   [9] 番茄钟：开始 / 暂停
+echo   [10] 番茄钟：跳过当前阶段
+echo   [11] 番茄钟：关闭
+echo.
 echo   [0] 退出
 echo.
 set /p "choice=请输入数字回车: "
@@ -40,6 +46,10 @@ if "%choice%"=="4" goto restoreall
 if "%choice%"=="5" goto status
 if "%choice%"=="6" goto install
 if "%choice%"=="7" goto uninstall
+if "%choice%"=="8" goto pmopen
+if "%choice%"=="9" goto pmtoggle
+if "%choice%"=="10" goto pmskip
+if "%choice%"=="11" goto pmclose
 if "%choice%"=="0" exit /b 0
 goto menu
 
@@ -89,5 +99,36 @@ goto menu
 :uninstall
 echo.
 FloralPin.exe uninstall
+pause
+goto menu
+
+:pmopen
+echo.
+start "" "%~dp0FloralPin.exe" pomodoro
+echo 番茄钟已打开（默认在屏幕右上角）。
+echo 点一下窗口 = 开始/暂停；按住拖动 = 移动；右键 = 更多操作；
+echo 用 Ctrl+Alt+D 也能把它钉到桌面。时长配置见本目录 pomodoro.json。
+echo.
+pause
+goto menu
+
+:pmtoggle
+echo.
+FloralPin.exe pomodoro toggle
+echo.
+pause
+goto menu
+
+:pmskip
+echo.
+FloralPin.exe pomodoro skip
+echo.
+pause
+goto menu
+
+:pmclose
+echo.
+FloralPin.exe pomodoro close
+echo.
 pause
 goto menu

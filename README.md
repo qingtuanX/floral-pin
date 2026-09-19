@@ -42,8 +42,22 @@ pin a sticky-note window to the **desktop layer** (below all normal windows), or
 | 1 | 开始后台守护（让热键生效） |
 | 2 | 切换鼠标下的便签（3 秒倒计时，不用记热键） |
 | 3 / 4 | 全部钉到桌面 / 全部恢复置顶 |
-| 5 | 查看当前状态（含实际热键、日志路径） |
+| 5 | 查看当前状态（含实际热键、番茄钟状态、日志路径） |
 | 6 / 7 | 开启 / 关闭开机自启 |
+| 8 | 番茄钟：打开 / 显示 |
+| 9 / 10 / 11 | 番茄钟：开始暂停 / 跳过阶段 / 关闭 |
+
+## 番茄钟
+
+内置一个桌面番茄钟（独立功能，不依赖花笺）：`专注 24:31 · ●●○○`
+
+- **打开**：菜单 `[8]`，窗口默认出现在屏幕右上角
+- **操作**：点一下窗口 = 开始/暂停；按住拖动 = 移动（位置自动记住）；右键 = 跳过 / 重置 / 钉到桌面 / 打开设置 / 关闭
+- **和便签同一个热键**：鼠标指到番茄钟上按 `Ctrl+Alt+D`，同样可以在「置顶 / 钉到桌面」之间切换
+- **阶段结束**：托盘通知 + 提示音，并自动进入下一阶段（可在配置里关闭）
+- **配置**：工具目录下 `pomodoro.json`（首次打开自动生成）
+  `focus_minutes` / `short_break_minutes` / `long_break_minutes` /
+  `cycles_before_long_break` / `auto_start_next` / `sound` / `notify`
 
 **命令行**：
 
@@ -53,6 +67,7 @@ FloralPin.exe toggle [hwnd]  切换鼠标下的窗口（或指定句柄）
 FloralPin.exe pin            全部钉到桌面
 FloralPin.exe restore        全部恢复置顶
 FloralPin.exe status         查看状态
+FloralPin.exe pomodoro [start|toggle|skip|reset|close]   番茄钟
 FloralPin.exe install        开启开机自启（启动文件夹快捷方式）
 FloralPin.exe uninstall      关闭开机自启
 ```
@@ -86,12 +101,15 @@ FloralPin.exe uninstall      关闭开机自启
 
 A tiny Windows tool that pins [floral-notepaper](https://github.com/Achilng/floral-notepaper) sticky-note
 windows to the desktop layer (below every normal window, survives "Show Desktop"), or restores them to
-always-on-top — per note, toggled with `Ctrl+Alt+D` while hovering a note.
+always-on-top — per note, toggled with `Ctrl+Alt+D` while hovering a note. A small **pomodoro timer**
+is bundled as well.
 
 - Install: put the folder anywhere (not required to be outside Program Files, but recommended), run
   `花笺钉桌面.cmd` (menu) → `[1]` to start the background daemon, `[6]` to enable autostart.
 - Same technique as floral-notepaper PR [#378](https://github.com/Achilng/floral-notepaper/pull/378):
   `SetParent` the window under the desktop-icon `WorkerW`.
+- Pomodoro: open from the menu (`[8]`), click to start/pause, drag to move, right-click for more. The
+  same `Ctrl+Alt+D` hotkey can send it to the desktop layer too; durations live in `pomodoro.json`.
 - The menu script is GBK-encoded (Chinese Windows console); the `FloralPin.exe` CLI itself is ASCII-clean.
 
 ## License
