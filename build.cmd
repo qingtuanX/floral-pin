@@ -8,8 +8,7 @@ if not exist "%CSC%" (
 )
 rem winexe: no console window (safe for autostart / daemon); CLI output still
 rem works when launched from a console because std handles are inherited.
-rem WinForms / Drawing references are used by the built-in pomodoro window.
-"%CSC%" /nologo /target:winexe /codepage:65001 /r:System.Windows.Forms.dll /r:System.Drawing.dll /out:"%~dp0FloralPin.exe" "%~dp0FloralPin.cs"
+"%CSC%" /nologo /target:winexe /codepage:65001 /out:"%~dp0FloralPin.exe" "%~dp0FloralPin.cs"
 if errorlevel 1 (
   echo [build] FAILED
   exit /b 1
